@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#071014">
+<title>AFTERFALL — Artbook de développement</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;background:#071014;color:#e9f0ee;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:20;opacity:.055;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E")}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+.hero{min-height:100vh;position:relative;display:flex;align-items:center;overflow:hidden;background:
+radial-gradient(circle at 78% 30%,rgba(132,185,190,.14),transparent 28%),
+linear-gradient(180deg,rgba(3,10,13,.15),#071014 92%),
+linear-gradient(125deg,#081318,#12252a 48%,#071014)}
+.hero:before{content:"";position:absolute;inset:-15%;background:
+linear-gradient(112deg,transparent 38%,rgba(205,231,226,.06) 38.2%,transparent 39%),
+linear-gradient(72deg,transparent 57%,rgba(205,231,226,.04) 57.2%,transparent 58%);
+transform:rotate(-4deg);animation:drift 16s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(30px,-20px,-0px) rotate(-2deg)}}
+.snow{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.snow i{position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;opacity:.5;animation:fall linear infinite}
+.snow i:nth-child(1){left:7%;animation-duration:9s;animation-delay:-2s}.snow i:nth-child(2){left:17%;animation-duration:12s;animation-delay:-8s}.snow i:nth-child(3){left:29%;animation-duration:10s;animation-delay:-5s}.snow i:nth-child(4){left:43%;animation-duration:14s;animation-delay:-9s}.snow i:nth-child(5){left:58%;animation-duration:11s;animation-delay:-4s}.snow i:nth-child(6){left:71%;animation-duration:13s;animation-delay:-10s}.snow i:nth-child(7){left:84%;animation-duration:9s;animation-delay:-6s}.snow i:nth-child(8){left:94%;animation-duration:15s;animation-delay:-3s}
+@keyframes fall{from{transform:translateY(-10vh)}to{transform:translate(35px,110vh)}}
+.nav{position:absolute;top:0;left:0;right:0;height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,5vw,80px);z-index:5;border-bottom:1px solid rgba(255,255,255,.06)}
+.logo{font-family:"Space Grotesk",sans-serif;font-weight:700;letter-spacing:.28em;font-size:15px}
+.logo span{color:#9cc8c5}
+.navlinks{display:flex;gap:28px;font-size:12px;text-transform:uppercase;letter-spacing:.13em;color:#aab9b8}
+.navlinks a{transition:.25s}.navlinks a:hover{color:#fff}
+.hero-content{position:relative;z-index:2;width:min(1120px,90%);margin:auto;padding-top:50px}
+.kicker{font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:#8eb9b6;margin-bottom:22px}
+h1{font-family:"Space Grotesk",sans-serif;font-size:clamp(76px,15vw,190px);line-height:.78;letter-spacing:-.075em;font-weight:700;text-shadow:0 20px 60px rgba(0,0,0,.35)}
+.tagline{margin-top:38px;max-width:610px;font-family:"Space Grotesk";font-size:clamp(20px,3vw,31px);line-height:1.3;color:#d8e3e1}
+.tagline em{color:#91aaa8;font-style:normal}
+.hero-meta{display:flex;gap:35px;margin-top:50px;font-size:10px;text-transform:uppercase;letter-spacing:.18em;color:#718483}
+.hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.25em;color:#728684;text-transform:uppercase;animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.35;transform:translate(-50%,6px)}}
+.section{position:relative;padding:130px clamp(22px,7vw,110px);max-width:1450px;margin:auto}
+.dark{background:#071014}.mist{background:linear-gradient(180deg,#071014,#0a171a,#071014)}
+.chapter{font-size:11px;letter-spacing:.3em;color:#76908e;text-transform:uppercase;margin-bottom:16px}
+.section-title{font-family:"Space Grotesk";font-size:clamp(42px,7vw,82px);line-height:.95;letter-spacing:-.055em;margin-bottom:30px}
+.quote{font-family:"Space Grotesk";font-size:clamp(24px,4vw,43px);line-height:1.18;max-width:900px;color:#d9e4e1;margin:30px 0 70px}
+.quote:before{content:"“";font-size:2em;line-height:0;color:#86aaa7;vertical-align:-.3em;margin-right:7px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+.panel{border:1px solid rgba(174,210,207,.11);background:rgba(255,255,255,.025);padding:30px;min-height:190px;position:relative;overflow:hidden;transition:transform .35s,border-color .35s,background .35s}
+.panel:hover{transform:translateY(-7px);border-color:rgba(174,210,207,.3);background:rgba(255,255,255,.045)}
+.panel:after{content:"";position:absolute;width:100px;height:100px;border-radius:50%;right:-40px;bottom:-50px;background:rgba(128,184,180,.08);filter:blur(10px)}
+.panel h3{font-family:"Space Grotesk";font-size:20px;margin:12px 0}.panel p{font-size:14px;line-height:1.7;color:#9fb0ae}
+.pillar{grid-column:span 4}.icon{font-size:25px;filter:grayscale(.2)}
+.lead{grid-column:span 7}.side{grid-column:span 5}
+.text{font-size:16px;line-height:1.85;color:#aebdbb;max-width:850px}
+.text strong{color:#e6efed;font-weight:600}
+.world-map{margin-top:60px;position:relative;height:430px;border:1px solid rgba(174,210,207,.1);overflow:hidden;background:
+radial-gradient(ellipse at 25% 70%,rgba(111,161,157,.12),transparent 28%),
+radial-gradient(ellipse at 74% 25%,rgba(159,193,187,.1),transparent 25%),
+linear-gradient(145deg,#091519,#0b1a1e)}
+.world-map:before{content:"";position:absolute;inset:12% 8%;border:1px dashed rgba(148,190,186,.16);border-radius:48% 55% 42% 57%;transform:rotate(-12deg)}
+.map-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(150,190,187,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(150,190,187,.06) 1px,transparent 1px);background-size:60px 60px;transform:perspective(500px) rotateX(55deg) scale(1.4);transform-origin:center bottom;opacity:.45}
+.region{position:absolute;padding:8px 12px;border-left:2px solid #87aaa7;background:rgba(7,16,20,.72);font-size:10px;letter-spacing:.18em;text-transform:uppercase}.region b{display:block;font-size:14px;letter-spacing:.03em;margin-bottom:3px}.r1{left:12%;top:62%}.r2{left:42%;top:43%}.r3{left:64%;top:19%}.r4{right:10%;top:58%}
+.weather{margin-top:70px;display:grid;grid-template-columns:1fr 1fr;gap:18px}.weather-card{min-height:270px;padding:34px;border:1px solid rgba(174,210,207,.1);position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(148,190,187,.05),rgba(255,255,255,.015))}
+.weather-card:before{content:"";position:absolute;width:280px;height:280px;right:-100px;top:-110px;border-radius:50%;border:1px solid rgba(165,205,201,.1);box-shadow:0 0 0 35px rgba(165,205,201,.02),0 0 0 70px rgba(165,205,201,.015)}
+.weather-card h3{font-family:"Space Grotesk";font-size:27px;margin:10px 0 16px}.weather-card p{max-width:500px;color:#9fb0ae;line-height:1.75;font-size:14px}
+.plants{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:45px}.plant{height:130px;border:1px solid rgba(174,210,207,.1);display:flex;align-items:end;padding:15px;background:linear-gradient(160deg,rgba(135,177,172,.05),rgba(255,255,255,.015));transition:.3s}.plant:hover{transform:scale(1.025);background:rgba(135,177,172,.08)}.plant span{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#a8b9b7}
+.final{min-height:75vh;display:flex;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle,rgba(107,153,150,.1),transparent 35%),#071014}.final .section-title{max-width:850px;margin:auto}.final .quote{margin:35px auto;font-size:clamp(25px,4vw,48px)}.footer{border-top:1px solid rgba(255,255,255,.07);padding:30px clamp(22px,7vw,110px);display:flex;justify-content:space-between;color:#607371;font-size:10px;letter-spacing:.15em;text-transform:uppercase}
+.reveal{opacity:0;transform:translateY(35px);transition:opacity .8s ease,transform .8s ease}.reveal.show{opacity:1;transform:none}
+@media(max-width:800px){.navlinks{display:none}.section{padding-top:90px;padding-bottom:90px}.pillar,.lead,.side{grid-column:1/-1}.weather{grid-template-columns:1fr}.plants{grid-template-columns:repeat(2,1fr)}.world-map{height:340px}.hero-meta{flex-direction:column;gap:9px}h1{font-size:22vw}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="hero" id="top">
+<nav class="nav">
+<div class="logo">AFTER<span>FALL</span></div>
+<div class="navlinks"><a href="#vision">Vision</a><a href="#monde">Monde</a><a href="#camps">Camps</a><a href="#tempetes">Tempêtes</a></div>
+</nav>
+<div class="snow"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="hero-content">
+<div class="kicker">Artbook de développement · Chapitre I</div>
+<h1>AFTERFALL</h1>
+<p class="tagline">Le monde ne s'est pas terminé dans une explosion.<br><em>Il s'est arrêté.</em></p>
+<div class="hero-meta"><span>FPS narratif</span><span>Survie · Exploration · Coopération</span><span>État de New York</span></div>
+</div>
+<div class="hero-scroll">↓ découvrir le monde</div>
+</header>
+
+<main>
+<section class="section dark" id="vision">
+<div class="chapter reveal">01 — La vision</div>
+<h2 class="section-title reveal">Une civilisation<br>à l'arrêt.</h2>
+<p class="quote reveal">Afterfall est un FPS narratif de survie et d'exploration se déroulant dans une version dévastée de l'État de New York.</p>
+<div class="grid">
+<article class="panel pillar reveal"><div class="icon">❄</div><h3>Explorer</h3><p>Chaque bâtiment, tunnel et forêt peut cacher une découverte. L'inconnu devient une raison de continuer.</p></article>
+<article class="panel pillar reveal"><div class="icon">🎒</div><h3>Préparer</h3><p>Équipement, provisions et véhicule sont choisis avant chaque sortie. La préparation devient une partie de la survie.</p></article>
+<article class="panel pillar reveal"><div class="icon">😨</div><h3>Survivre</h3><p>Froid, faim, fatigue et stress influencent directement les performances sans transformer l'immersion en contrainte.</p></article>
+<article class="panel pillar reveal"><div class="icon">🤝</div><h3>Coopérer</h3><p>Les camps sont communs à tous les joueurs. Expéditions, ressources et bases peuvent être partagées.</p></article>
+<article class="panel pillar reveal"><div class="icon">🌨</div><h3>S'adapter</h3><p>Le véritable adversaire est le monde : blizzards, tempêtes magnétiques et ruines rendent chaque sortie imprévisible.</p></article>
+</div>
+</section>
+
+<section class="section mist">
+<div class="chapter reveal">02 — Direction artistique</div>
+<h2 class="section-title reveal">La beauté<br>dans l'abandon.</h2>
+<div class="grid">
+<div class="lead reveal"><p class="text">Afterfall cherche un équilibre entre <strong>un monde détruit</strong> et <strong>une nature qui reprend lentement ses droits</strong>. Les immeubles sont fissurés. Des plantes résistantes poussent entre les débris. Les routes disparaissent sous la neige tandis que des fleurs hivernales colorent discrètement les ruines.</p></div>
+<div class="side panel reveal"><h3>Le contraste</h3><p>La beauté naît de la rencontre entre l'abandon et la vie. Rien n'est complètement mort.</p></div>
+</div>
+<div style="margin-top:85px" class="chapter reveal">Philosophie des combats</div>
+<p class="quote reveal">Les combats sont rares.<br>Mais lorsqu'ils éclatent, ils doivent être inoubliables.</p>
+<p class="text reveal">Le joueur n'est jamais une armée à lui seul. Chaque affrontement représente une prise de risque. Le stress, la fatigue et le manque de ressources influencent autant l'issue du combat que la qualité de l'arme utilisée.</p>
+</section>
+
+<section class="section dark" id="monde">
+<div class="chapter reveal">03 — Le monde</div>
+<h2 class="section-title reveal">L'Hiver Rouge.</h2>
+<p class="quote reveal">La planète n'est pas morte.<br>Elle a simplement changé.</p>
+<p class="text reveal">Pendant plusieurs années, le champ magnétique terrestre est devenu instable. Les satellites sont tombés, le GPS est devenu inutilisable, les communications se sont interrompues et les réseaux électriques ont été détruits. Sans infrastructure, la civilisation s'est effondrée. Quelques années plus tard, le climat s'est brutalement refroidi.</p>
+<div class="world-map reveal">
+<div class="map-grid"></div>
+<div class="region r1"><b>Long Island</b>Ports · marinas</div>
+<div class="region r2"><b>Brooklyn</b>Ruines urbaines</div>
+<div class="region r3"><b>Manhattan</b>Ville verticale</div>
+<div class="region r4"><b>Catskills</b>Forêts · montagnes</div>
+</div>
+</section>
+
+<section class="section mist">
+<div class="chapter reveal">04 — Les régions</div>
+<h2 class="section-title reveal">Quatre visages<br>d'un même hiver.</h2>
+<div class="grid">
+<article class="panel pillar reveal"><div class="icon">🏙</div><h3>Manhattan</h3><p>Une ville verticale figée sous la neige. Les gratte-ciels offrent des points d'observation exceptionnels, mais les tempêtes magnétiques y sont particulièrement violentes.</p></article>
+<article class="panel pillar reveal"><div class="icon">🌉</div><h3>Brooklyn</h3><p>Quartiers résidentiels, rues étroites, immeubles effondrés et ponts partiellement détruits composent un environnement dense et dangereux.</p></article>
+<article class="panel pillar reveal"><div class="icon">🌲</div><h3>Les Catskills</h3><p>Forêts profondes, montagnes et anciennes stations de ski. Le froid y est extrême, mais la faune et la flore ont mieux résisté.</p></article>
+<article class="panel pillar reveal"><div class="icon">⚓</div><h3>Long Island</h3><p>Ports, chantiers navals, marinas abandonnées et anciennes installations militaires forment un territoire ouvert sur l'océan.</p></article>
+</div>
+</section>
+
+<section class="section dark" id="camps">
+<div class="chapter reveal">05 — Les camps</div>
+<h2 class="section-title reveal">Un endroit où<br>revenir.</h2>
+<div class="grid">
+<div class="panel lead reveal"><h3>Les camps de survivants</h3><p>Les camps servent de lieux sûrs. On y trouve des ateliers, des médecins, des marchands, des missions, des dortoirs et des garages. Tous les joueurs peuvent s'y retrouver avant de partir en expédition.</p></div>
+<div class="panel side reveal"><h3>Les bases personnelles</h3><p>Chaque Éclaireur possède son propre refuge : maison abandonnée, station-service, hangar ou ferme isolée.</p></div>
+</div>
+<div class="plants reveal">
+<div class="plant"><span>Atelier d'armes</span></div><div class="plant"><span>Garage</span></div><div class="plant"><span>Stockage</span></div><div class="plant"><span>Décoration</span></div><div class="plant"><span>Jardin protégé</span></div><div class="plant"><span>Salle radio</span></div>
+</div>
+</section>
+
+<section class="section mist">
+<div class="chapter reveal">06 — La nature</div>
+<h2 class="section-title reveal">La vie trouve<br>un chemin.</h2>
+<p class="text reveal">La végétation est l'un des symboles d'Afterfall. Certaines espèces ont survécu malgré le climat. Elles servent de repères visuels et, pour certaines, de ressources utiles à la fabrication ou aux soins.</p>
+<div class="plants reveal">
+<div class="plant"><span>Mahonia</span></div><div class="plant"><span>Hellébore</span></div><div class="plant"><span>Fétuque bleue</span></div><div class="plant"><span>Sédums</span></div><div class="plant"><span>Jasmin d'hiver</span></div><div class="plant"><span>Musa basjoo</span></div>
+</div>
+</section>
+
+<section class="section dark" id="tempetes">
+<div class="chapter reveal">07 — Les tempêtes magnétiques</div>
+<h2 class="section-title reveal">Le monde<br>continue de changer.</h2>
+<div class="weather">
+<div class="weather-card reveal"><div class="chapter">Phénomène</div><h3>Une météo hostile</h3><p>Les tempêtes ne sont pas de simples événements météorologiques. Elles modifient les conditions d'exploration et peuvent transformer une mission planifiée par temps calme en expédition dangereuse.</p></div>
+<div class="weather-card reveal"><div class="chapter">Perturbations</div><h3>Technologie instable</h3><p>Les armes électromagnétiques, radios, drones et certains véhicules peuvent être perturbés. Le joueur doit apprendre à composer avec l'incertitude.</p></div>
+</div>
+</section>
+
+<section class="final" id="final">
+<div>
+<div class="chapter reveal">Phrase directrice</div>
+<h2 class="section-title reveal">Chaque expédition<br>est une histoire.</h2>
+<p class="quote reveal">Chaque retour au camp est une victoire.</p>
+</div>
+</section>
+</main>
+<footer class="footer"><span>AFTERFALL</span><span>Artbook de développement · Chapitres I & II</span></footer>
+
+<script>
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
